@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="divDatos"></div>
+    <button id="btnPedirDatos">Petición GET HTTP</button>
+    <script>
+        let divDatos = document.getElementById("divDatos");
+        let btnPedirDatos = document.getElementById("btnPedirDatos");
+        // Objeto AJAX: Asyncronous JavaScript and XML
+        let objAJAX = new XMLHttpRequest()
+
+        btnPedirDatos.onclick = function(){ // = .addEventListener('click', function(){})
+            objAJAX.send() // Come on, Ajax, lanza la petición de manera asíncrona
+        }
+        
+        // Cuando cambie el estado de la petición HTTP en el objeto Ajax
+        objAJAX.onreadystatechange = function(){
+            // AJAX tiene 4 estados: 1 (abierto) al 4 (terminado)
+            // Estado HTTP: 200(OK), 404(Not found), 500(Error del servidor)
+            alert(`Estado de los datos: ${objAJAX.readyState}
+                   Estado del HTTP: ${objAJAX.status}`)
+            
+            if(objAJAX.readyState == 4){
+                if(objAJAX.status == 200){
+                    divDatos.style.border = '15px solid green'
+                    divDatos.style.borderRadius = '10px'
+                    divDatos.style.transform = 'rotate(0.5turn)'
+                    divDatos.innerHTML = objAJAX.responseText
+                    // hemos consumido la api rest satisfactoriamente
+
+                    // convertimos el json en obj js y mapeamos la colección (array)
+                    // extrayendo los emails en mayúsculas con PROGRAMACIÓN ESTRUCTURADA
+                    let arrayUsu = JSON.parse(objAJAX.responseText)
+                    let arrayMayus = new Array()
+                    for(usu of arrayUsu){
+                        arrayMayus.push(usu.email.toUpperCase())
+                    }
+                    alert('FOR ' + JSON.stringify(arrayMayus))
+                    // vamos a hacer lo mismo con PROGRAMACIÓN FUNCIONAL
+                    let arrayForEach = []
+                    arrayUsu.forEach(usu => {
+                        arrayForEach.push(usu.email.toUpperCase())
+                    });
+                    alert('FOREACH '+ JSON.stringify(arrayForEach))
+
+                    // Otra vez con programación funcional pura
+                    let arrayMapeado = arrayUsu.map(u=> u.email)
+                    alert('MAP '+JSON.stringify(arrayMapeado).toUpperCase())
+                } else{
+                    divDatos.style.border = '15px solid red'
+                    divDatos.innerHTML = 'La petición ha cascado'
+                }
+                
+            }
+        }
+
+        objAJAX.open('GET', 'http://127.0.0.1:4000/api/usuarios/')
+    </script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 5vmin;
+  /*pointer-events: none; */
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 10vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(8px + 1vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+.App-logo:hover{
+  animation: App-logo-vueltas infinite 5s linear;
+
+}
+/*Definimos posiciones, rotaciones... en la línea de tiempo */
+@keyframes App-logo-vueltas {
+  from {
+    transform: rotate(0deg);
+  }
+  to{
+    transform: rotate(360deg);
+  }
+}
