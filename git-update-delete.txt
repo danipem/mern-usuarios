@@ -1,2 +1,7 @@
-UPDATE
-
+AÑadir botón UPDATE y DELETE
+FRONT
+Crear los componentes de editar y delete
+Definirlos en el HTML
+Correspondientes eventos 
+Enlazarlos con el back
+Mirar en Angular cómo se hacen los botones

@@ -1,4 +1,7 @@
 import React, { Component } from 'react'
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import EditarUsuario from "./EditarUsuario";
+
 
 class ListarUsuarios extends /*React.*/ Component{
     // equivalente al ngOnInit
@@ -26,12 +29,17 @@ class ListarUsuarios extends /*React.*/ Component{
         if(this.state === null){
             objViDomJSX = (<p>Cargando...</p>)
         } else{
+            let botonEditar = <div>
+                <Link to="/editar">Editar</Link>
+            </div>
             let filasTr = this.state.listaUsuarios.map((usu)=>{
 
                 return( <tr key={ usu._id }>
                             <td>{usu.nombre}</td>
                             <td>{usu.email}</td>
-                            <td>{usu.password}</td>
+                            <td>{ usu.edad }</td>
+                            {/*<td>{usu.password}</td>*/}
+                            <td>{botonEditar}</td>
                         </tr>)
             })
 
@@ -43,7 +51,8 @@ class ListarUsuarios extends /*React.*/ Component{
                             <tr>
                                 <th>Nombre</th>
                                 <th>Email</th>
-                                <th>Password</th>
+                                <th>Edad</th>
+                                {/*<th>Password</th>*/}
                             </tr>
                         </thead>
                         <tbody>
