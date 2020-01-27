@@ -1,31 +1,19 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-class CrearUsuario extends /*React.*/ Component{
-    // this.props es objeto con datos públicos de REACT
-    // this.state es objeto con datos privados: el estado interno del componente de REACT
-    // Como en Angular, las variables miembro de la clase privada
+class EditarUsuario extends React.Component{
     constructor(props){
-        super(props) // Invocamos al constructor del padre pasándole las propiedades públicas
-
-        // para evitar el problema del this con el JS
-        // Con bind() hacemos que, cuando se invoque el método, this sea realmente this:
-        // el objeto instanciado basado en la clase
-
+        super(props) 
         this.state = {
-            nombre: 'Pepe Guardiola',
-            email: 'aaa@aa.com',
-            password: 'hola',
-            edad: 25
+            nombre: '',
+            email: '',
+            edad: ''
         }
         this.onChangeNombre = this.onChangeNombre.bind(this)
         this.onChangeEmail = this.onChangeEmail.bind(this)
-        this.onChangePassword = this.onChangePassword.bind(this)
         this.onChangeEdad = this.onChangeEdad.bind(this)
         this.onSubmit = this.onSubmit.bind(this)
     }
     
-    // Método invocado por React cada vez que se cambia el valor del <input>
-    // Se envía un objeto con la información del evento
     onChangeNombre(evt){
         this.setState({
             nombre: evt.target.value
@@ -51,7 +39,7 @@ class CrearUsuario extends /*React.*/ Component{
 
         // invocaríamos al servicio cliente HTTP, Ajax, fetch...
         console.log(`Datos: ${ this.state.nombre }, ${this.state.email}, ${this.state.password}, ${this.state.edad}`);
-        window.fetch('http://127.0.0.1:4000/api/usuarios/registro', {
+        window.fetch('http://127.0.0.1:4000/api/usuarios/editar', {
             method: 'post',
             body: JSON.stringify({
                 "nombre": this.state.nombre,
@@ -62,12 +50,12 @@ class CrearUsuario extends /*React.*/ Component{
             headers:{
                 'Content-Type': 'application/json'
             }
-        }).then((res)=> alert("Pues habrá ido chachipirulichi")).catch((vacas)=> "MAL MAL MAL MAL MAL")
+        }).then((res)=> alert("Bien modificado")).catch((vacas)=> "MAL MAL MAL MAL MAL")
     }
     render(){
         return(
             <div>
-                <h2>Formulario crear usuario</h2>
+                <h2>Modificar datos</h2>
                 <form onSubmit={ this.onSubmit }>
                     <div>
                         <label>Nombre: </label>
@@ -81,12 +69,7 @@ class CrearUsuario extends /*React.*/ Component{
                                 value={ this.state.email } 
                                 onChange={ this.onChangeEmail }/>
                     </div>
-                    <div>
-                        <label>Password: </label>
-                        <input type="password" placeholder="l3tr4s y números" 
-                                value={ this.state.password }
-                                onChange={ this.onChangePassword }/>
-                    </div>
+
                     <div>
                         <label>Edad: </label>
                         <input type="text" placeholder="33" 
@@ -98,7 +81,6 @@ class CrearUsuario extends /*React.*/ Component{
                     </div>
                 </form>
             </div>
-        )
-    }
+        )}
 }
-export default CrearUsuario;
+export default EditarUsuario

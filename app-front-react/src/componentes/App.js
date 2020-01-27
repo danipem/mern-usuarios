@@ -5,6 +5,7 @@ import logo from '../logo.svg';
 import './App.css';
 import CrearUsuario from './CrearUsuario'
 import ListarUsuarios from './ListarUsuarios'
+import EditarUsuario from "./EditarUsuario";
 
 function App(){
     let estiloLogo = { // Objeto de JS  con propiedades CSS
@@ -24,6 +25,7 @@ function App(){
                 </nav>
                 <Route path="/" exact component={ ListarUsuarios }/>
                 <Route path="/registro" component={ CrearUsuario }/>
+                <Route path="/editar" component={ EditarUsuario }/>
             </div>
         </Router>
     );
