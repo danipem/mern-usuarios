@@ -74,7 +74,7 @@ rutasAPI.route("/:id").delete(function(req,res){
     console.log("ha sido eliminado" + req.params.id);
     Usuario.findById(req.params.id).remove().exec();
     // se devuelve un objeto para que no se quede en bucle el  POSTMAN..//
-    res.json({"mensaje": "ok"});
+    res.json({mensaje: "OK"});
 });
 //Funcion para acuralizar la tabla
 //CODIGO PARA HACER EL UPDATE

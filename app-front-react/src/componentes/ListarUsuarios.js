@@ -33,7 +33,6 @@ class ListarUsuarios extends /*React.*/ Component{
         // Aquí se ejectua cuando se desmonte el componente
     }
 
-
     botonEliminar(evt) {
         let usuId = evt.target.dataset.id
         console.log(usuId);

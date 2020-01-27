@@ -11,6 +11,9 @@ let Usuario = new Schema({
     },
     password: {
         type: String
+    },
+    edad: {
+        type: Number
     }
 })
 // Como el export default pero para Node
