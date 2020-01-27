@@ -69,10 +69,10 @@ rutasAPI.route("/").get(function(reqPeticionHttp, resRespuestaHttp){
 })
 // http://localhost:4000/api/usuarios 
 // Funcion para borrar//
-//TODO: crear un una validacion si el USUARIO EXISTE
-<<<<<<< HEAD
-rutasAPI.route("/:identificador").delete(function (reqHttp,resHttp){
-    let id = reqHttp.params.identificador;
+// crear un una validacion si el USUARIO EXISTE
+
+rutasAPI.route("/:id").delete(function (reqHttp,resHttp){
+    let id = reqHttp.params.id;
     let consultaFindOne = Usuario.findById( { "_id": id} );
     //Ejecutamos la consulta para saber si hay uno
     consultaFindOne.exec((err, resDoc) => {
@@ -99,13 +99,8 @@ rutasAPI.route("/:identificador").delete(function (reqHttp,resHttp){
             }
         }
     });
-=======
-rutasAPI.route("/:id").delete(function(req,res){
-    console.log("ha sido eliminado" + req.params.id);
-    Usuario.findById(req.params.id).remove().exec();
-    // se devuelve un objeto para que no se quede en bucle el  POSTMAN..//
-    res.json({mensaje: "OK"});
->>>>>>> d6ebaeaed0b1593c2281c6af080ba2fa97257a56
+
+
 });
 
 //Funcion para acuralizar la tabla
