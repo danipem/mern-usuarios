@@ -40,11 +40,10 @@ class EditarUsuario extends React.Component{
         // invocaríamos al servicio cliente HTTP, Ajax, fetch...
         console.log(`Datos: ${ this.state.nombre }, ${this.state.email}, ${this.state.password}, ${this.state.edad}`);
         window.fetch('http://127.0.0.1:4000/api/usuarios/editar', {
-            method: 'post',
+            method: 'put',
             body: JSON.stringify({
                 "nombre": this.state.nombre,
                 "email": this.state.email,
-                "password": this.state.password,
                 "edad": this.state.edad
             }),
             headers:{
