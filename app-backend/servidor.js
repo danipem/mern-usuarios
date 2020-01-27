@@ -96,7 +96,10 @@ rutasAPI.route("/editar/:id").put(function(req,res){
        for(const prop in req.body){
            user[prop] = req.body[prop];
        }
+       console.log(user)
+       console.log(req.body)
        user.save();
+       res.json({"mensaje": "FUE EDITADO"});
    }).then(res=>res).catch(err=>err) 
 });
 
