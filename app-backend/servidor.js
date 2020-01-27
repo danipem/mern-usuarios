@@ -67,5 +67,47 @@ rutasAPI.route("/").get(function(reqPeticionHttp, resRespuestaHttp){
         }
     })
 })
+// http://localhost:4000/api/usuarios 
+// Funcion para borrar//
+//TODO: crear un una validacion si el USUARIO EXISTE
+rutasAPI.route("/:id").delete(function(req,res){
+    console.log("ha sido eliminado" + req.params.id);
+    Usuario.findById(req.params.id).remove().exec();
+    // se devuelve un objeto para que no se quede en bucle el  POSTMAN..//
+    res.json({"mensaje": "ok"});
+});
+//Funcion para acuralizar la tabla
+//CODIGO PARA HACER EL UPDATE
+//LET (cuando la varible varia) CONST (es constante sera siempre igual )
+//req. recibe los datos que envia el usuario
+//res. envia el resultado que envia el usuario
+// el (.then) siempre hay que ponerlo cuado se genera una promesa
+//findById: es una promesa
+//GET: el metodO Get es para ver lo que se ha insertado  del POST (read/leer)
+//POST: el metodo POST  vendria siendo un insert(BBDD) es para (crear/Create)
+//PUT:  el metodo Put es para editar (Update/Replac)
+//DELETE: el metodO Delete es para eliminar
+
+rutasAPI.route("/editar/:id").put(function(req,res){
+   let editarUsu =new Usuario(req.body);
+   editarUsu._id = req.params.id;
+   Usuario.findById(editarUsu._id, function(err,user){
+       console.log("Usuario EDITADO")
+       for(const prop in req.body){
+           user[prop] = req.body[prop];
+       }
+       console.log(user)
+       console.log(req.body)
+       user.save();
+       res.json({"mensaje": "FUE EDITADO"});
+   }).then(res=>res).catch(err=>err) 
+});
+
+
+
+
+
+
+
 
 console.log('Una prueba muy divertida para ver el orden de las llamadas');
