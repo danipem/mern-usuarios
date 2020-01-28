@@ -64,12 +64,27 @@ rutasAPI.route("/").get(function(reqPeticionHttp, resRespuestaHttp){
         } else{
             // Pedimos devolver la colección en formato JSON
             resRespuestaHttp.json(coleccionUsuarios)
+            console.log(coleccionUsuarios)
         }
     })
 })
 // http://localhost:4000/api/usuarios 
 // Funcion para borrar//
 // crear un una validacion si el USUARIO EXISTE
+
+rutasAPI.route("/:id").get(function(reqPeticionHttp, resRespuestaHttp){
+    // Pide tooooda la colección e invoca a esta callback o el error
+    // Invoca la query de mongo db.usuarios.find()
+    Usuario.findById(reqPeticionHttp.params.id, function(err, usuario ) {
+        if(err){
+            console.log(err);
+        } else{
+            // Pedimos devolver la colección en formato JSON
+            console.log(usuario)
+            resRespuestaHttp.json(usuario)
+        }
+    })
+})
 
 rutasAPI.route("/:id").delete(function (reqHttp,resHttp){
     let id = reqHttp.params.id;
@@ -123,10 +138,17 @@ rutasAPI.route("/editar/:id").put(function(req,res){
        for(const prop in req.body){
            user[prop] = req.body[prop];
        }
+       if(err){
+           console.log(err)
+       }else{
+        user.save();
+        res.json({
+            mensaje: "FUE EDITADO"
+        });
+       }
        console.log(user)
        console.log(req.body)
-       user.save();
-       res.json({"mensaje": "FUE EDITADO"});// aqui se envia una respuesta JSON para que no se 
+       // aqui se envia una respuesta JSON para que no se 
                                             // que en un bucle el POSTMAN.,/
    }).then(res=>res).catch(err=>err) 
 });

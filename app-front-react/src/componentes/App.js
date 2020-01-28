@@ -25,7 +25,7 @@ function App(){
                 </nav>
                 <Route path="/" exact component={ ListarUsuarios }/>
                 <Route path="/registro" component={ CrearUsuario }/>
-                <Route path="/editar" component={ EditarUsuario }/>
+                <Route path="/editar/:id" component={ EditarUsuario }/>
             </div>
         </Router>
     );

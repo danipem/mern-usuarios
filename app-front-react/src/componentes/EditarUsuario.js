@@ -1,85 +1,120 @@
 import React from 'react'
 
-class EditarUsuario extends React.Component{
-    constructor(props){
-        super(props) 
+class EditarUsuario extends React.Component {
+    constructor(props) {
+        super(props)
         this.state = {
             nombre: '',
             email: '',
+            password: '',
             edad: ''
         }
         this.onChangeNombre = this.onChangeNombre.bind(this)
         this.onChangeEmail = this.onChangeEmail.bind(this)
         this.onChangeEdad = this.onChangeEdad.bind(this)
-        this.onSubmit = this.onSubmit.bind(this)
+        this.onChangePassword = this.onChangePassword.bind(this)
+        this.onEdit = this.onEdit.bind(this)
+        this.usuarioEdit = this.usuarioEdit.bind(this)
+
     }
-    
-    onChangeNombre(evt){
+
+    componentDidMount() {
+        const {id} = this.props.match.params;
+        this.usuarioEdit(id);
+    }
+
+    onChangeNombre(evt) {
         this.setState({
             nombre: evt.target.value
         })
     }
-    onChangeEdad(evt){
+    onChangeEdad(evt) {
         this.setState({
             edad: evt.target.value
         })
     }
-    onChangeEmail(evt){
+    onChangeEmail(evt) {
         this.setState({
             email: evt.target.value
         })
     }
-    onChangePassword(evt){
+    onChangePassword(evt) {
         this.setState({
             password: evt.target.value
         })
     }
-    onSubmit(evt){
-        evt.preventDefault();
 
-        // invocaríamos al servicio cliente HTTP, Ajax, fetch...
-        console.log(`Datos: ${ this.state.nombre }, ${this.state.email}, ${this.state.password}, ${this.state.edad}`);
-        window.fetch('http://127.0.0.1:4000/api/usuarios/editar', {
+    usuarioEdit(id) {
+
+        window.fetch(`http://localhost:4000/api/usuarios/${id}`).then((res) => {
+            res.json().then((obj) => {
+                this.setState({
+                    nombre: obj.nombre,
+                    email: obj.email,
+                    password: obj.password,
+                    edad: obj.edad,
+                    id: obj._id
+                })
+            })
+        }).then((res => res))
+    }
+
+    onEdit(evt) {
+        let id = evt.target.dataset.id
+
+        window.fetch(`http://127.0.0.1:4000/api/usuarios/editar/${id}`, {
             method: 'put',
             body: JSON.stringify({
-                "nombre": this.state.nombre,
-                "email": this.state.email,
-                "edad": this.state.edad
+                nombre: this.state.nombre,
+                email: this.state.email,
+                edad: this.state.edad
             }),
-            headers:{
+            headers: {
                 'Content-Type': 'application/json'
             }
-        }).then((res)=> alert("Bien modificado")).catch((vacas)=> "MAL MAL MAL MAL MAL")
+        }).then((res) => {
+            res.json().then((obj) => { 
+                if(obj.mensaje === "FUE EDITADO"){
+                    alert('El usuario se ha modificado con éxito')
+                   window.location.href = "http://localhost:3000/"
+            } else {
+                alert('No se ha podido modificar el usuario')
+            }
+            })
+        })
     }
-    render(){
-        return(
+
+
+    render() {
+        return (
             <div>
                 <h2>Modificar datos</h2>
-                <form onSubmit={ this.onSubmit }>
+                <form onSubmit={this.onEdit} data-id={this.state.id}>
                     <div>
                         <label>Nombre: </label>
-                        <input type="text" placeholder="Gilberto" 
-                                value={ this.state.nombre } 
-                                onChange={ this.onChangeNombre }/>
+                        <input type="text" placeholder=""
+                            value={this.state.nombre}
+                            onChange={this.onChangeNombre} />
                     </div>
                     <div>
                         <label>Email: </label>
-                        <input type="email" placeholder="ejemplo@gmail.com" 
-                                value={ this.state.email } 
-                                onChange={ this.onChangeEmail }/>
+                        <input type="email" placeholder=""
+                            value={this.state.email}
+                            onChange={this.onChangeEmail} />
                     </div>
 
                     <div>
                         <label>Edad: </label>
-                        <input type="text" placeholder="33" 
-                                value={ this.state.edad }
-                                onChange={ this.onChangeEdad }/>
+                        <input type="text" placeholder=""
+                            value={this.state.edad}
+                            onChange={this.onChangeEdad} />
                     </div>
                     <div>
-                        <input type="submit" value="Enviar"/>
+                        <input type="submit" value="Enviar" />
                     </div>
                 </form>
             </div>
-        )}
+        )
+    }
 }
 export default EditarUsuario
